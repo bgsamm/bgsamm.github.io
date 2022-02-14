@@ -1,1 +1,0 @@
-# bgsamm.github.io
