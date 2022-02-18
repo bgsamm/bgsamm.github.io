@@ -3,9 +3,200 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Portfolio - Sean Miller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean Miller - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/xsq3trg.css">
+    <script src="https://kit.fontawesome.com/978b02fc28.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <p>Hello world</p>
+    <nav class="main">
+      <h1>Sean Miller</h1>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+      </ul>
+    </nav>
+    <article>
+      <section id="about">
+        <h1>About</h1>
+        <div id="about-me">
+          <img src="images/selfie.jpg" id="selfie">
+          <div id="bio">
+            <p class="contact-info">E: sea.miller@outloook.com</p>
+            <!--<span class="contact-info">
+              <img src="images/2021 Twitter logo - blue.png" height="13px" width="14px">: @pjsamm1
+            </span><br>-->
+            <p>Hello! My name is Sean. I'm a junior programmer looking to make my way into software development.</p>
+            <p>Below is a sample of my various personal projects, with links to their respective hosted locations.</p>
+            <p>View my resume: <a href="resume.pdf">link</a></p>
+          </div>
+        </div>
+      </section>
+      <section id="work">
+        <h1>Work</h1>
+        <div id="jump-links">
+          Jump links:
+          <ul>
+            <li><a href="#pbrscript">PBRScript</a></li>
+            <li><a href="#pbrhex">PBRHex</a></li>
+            <li><a href="#blender-addon">Blender Add-On</a></li>
+            <li><a href="#malfunction">MalFunction</a></li>
+            <li><a href="#samms-arcade">Samm's Arcade</a></li>
+          </ul>
+        </div>
+        <section id="pbrscript">
+          <h2>PBRScript</h2>
+          <div class="external-link">
+            <a href="https://github.com/bgsamm/PBRScript" target="_blank" rel="noopener noreferrer">
+              GitHub<i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <p>A custom programming language for generating PowerPC assembly code for use with Pokémon Battle Revolution</p>
+          <div class="screenshots" id="pbrscript-images">
+            <figure>
+              <a href="images/PBRScript/pbrscript_strcmp.png">
+                <img src="images/PBRScript/pbrscript_strcmp.png">
+              </a>
+              <figcaption>Example of a while loop</figcaption>
+            </figure>
+            <figure>
+              <a href="images/PBRScript/pbrscript_for.png">
+                <img src="images/PBRScript/pbrscript_for.png">
+              </a>
+              <figcaption>Example of a for loop</figcaption>
+            </figure>
+            <figure>
+              <a href="images/PBRScript/pbrscript_switch.png">
+                <img src="images/PBRScript/pbrscript_switch.png">
+              </a>
+              <figcaption>Example of a switch statement</figcaption>
+            </figure>
+          </div>
+        </section>
+        <hr>
+        <section id="pbrhex">
+          <h2>PBRHex</h2>
+          <div class="external-link">
+            <a href="https://github.com/bgsamm/PBRHex" target="_blank" rel="noopener noreferrer">
+              GitHub<i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <p>A C# Windows Form-based tool for manipulating the files from Pokémon Battle Revolution</p>
+          <div class="screenshots" id="pbrhex-images">
+            <figure>
+              <a href="images/PBRHex/pbrhex_main.png">
+                <img src="images/PBRHex/pbrhex_main.png">
+              </a>
+              <figcaption>Main window containing the file tree</figcaption>
+            </figure>
+            <figure>
+              <a href="images/PBRHex/pbrhex_editor.png">
+                <img src="images/PBRHex/pbrhex_editor.png">
+              </a>
+              <figcaption>Hex editor for manually editing files</figcaption>
+            </figure>
+            <figure>
+              <a href="images/PBRHex/pbrhex_asm.png">
+                <img src="images/PBRHex/pbrhex_asm.png">
+              </a>
+              <figcaption>Assembly editor which disassembles code for manual editing</figcaption>
+            </figure>
+            <!--
+            <figure>
+              <img src="images/PBRHex/pbrhex_poke.png">
+              <figcaption>Window for editing the attributes of Pokémon</figcaption>
+            </figure>
+            -->
+          </div>
+        </section>
+        <hr>
+        <section id="blender-addon">
+          <h2>Blender PBR Model Import/Export Add-On</h2>
+          <div class="external-link">
+            <a href="https://github.com/bgsamm/pbr-models-import-export" target="_blank" rel="noopener noreferrer">
+              GitHub<i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <p>A Blender add-on for working with models in a previously undocumented format</p>
+          <div class="screenshots" id="blender-addon-images">
+            <figure>
+              <a href="images/Blender SDRs/victini_in_blender.png">
+                <img src="images/Blender SDRs/victini_in_blender.png">
+              </a>
+              <figcaption>A model set up in Blender using the add-on</figcaption>
+            </figure>
+            <figure>
+              <a href="images/Blender SDRs/victini_in_game.png">
+                <img src="images/Blender SDRs/victini_in_game.png">
+              </a>
+              <figcaption>The same model imported in-game</figcaption>
+            </figure>
+          </div>
+        </section>
+        <hr>
+        <section id="malfunction">
+          <h2>MalFunction</h2>
+          <div class="external-link">
+            <a href="https://smiller77.itch.io/malfunctionv2" target="_blank" rel="noopener noreferrer">
+              itch.io<i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <p>A game made in 48 hours using Unity and C# for the GMTK Game Jam with the theme "Out of Control", featuring a weapon that changes each time it gets used</p>
+          <div class="screenshots" id="malfunction-images">
+            <figure>
+              <a href="images/MalFunction/malfunction1.png">
+                <img src="images/MalFunction/malfunction1.png">
+              </a>
+              <figcaption>Start of a wave</figcaption>
+            </figure>
+            <figure>
+              <a href="images/MalFunction/malfunction2.png">
+                <img src="images/MalFunction/malfunction2.png">
+              </a>
+              <figcaption>Enemies spawning</figcaption>
+            </figure>
+            <figure>
+              <a href="images/MalFunction/malfunction3.png">
+                <img src="images/MalFunction/malfunction3.png">
+              </a>
+              <figcaption>In the midst of a wave</figcaption>
+            </figure>
+          </div>
+        </section>
+        <hr>
+        <section id="samms-arcade">
+          <h2>Samm's Arcade</h2>
+          <div class="external-link">
+            <a href="https://cis166aa-samms-arcade.web.app/" target="_blank" rel="noopener noreferrer">
+              Website<i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+          <p>An original implementation of 3 classic arcade games using JavaScript and HTML5's canvas element, 
+            made as a final project for a web development class</p>
+          <div class="screenshots" id="samms-arcade-images">
+            <figure>
+              <a href="images/Samm's Arcade/pong.png">
+                <img src="images/Samm's Arcade/pong.png">
+              </a>
+              <figcaption>Pong</figcaption>
+            </figure>
+            <figure>
+              <a href="images/Samm's Arcade/snake.png">
+                <img src="images/Samm's Arcade/snake.png">
+              </a>
+              <figcaption>Snake</figcaption>
+            </figure>
+            <figure>
+              <a href="images/Samm's Arcade/bricks.png">
+                <img src="images/Samm's Arcade/bricks.png">
+              </a>
+              <figcaption>Bricks (aka Breakout)</figcaption>
+            </figure>
+          </div>
+        </section>
+      </section>
+    </article>
+    <footer></footer>
   </body>
 </html>
