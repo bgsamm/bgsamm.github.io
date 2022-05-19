@@ -161,6 +161,9 @@ footer {
 .screenshots figure img {
   padding: 0.8em 0.5em 0 0.5em;
 }
+#labyrinth-of-ludum img {
+  max-height: 280px;
+}
 #pbrscript-images img {
   max-width: 400px;
   max-height: 350px;
