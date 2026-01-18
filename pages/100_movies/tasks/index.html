@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <!--<title> - My Webpage</title>-->
+    <link rel="stylesheet" href="/styles/base.css" />
+
+    <link rel="stylesheet" href="/styles/page.css" />
+
+    <link rel="stylesheet" href="/styles/highlight.min.css">
+    <script src="/scripts/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-item title">100 movies</div>
+        <div class="nav-item tabs">
+            <a id="tab-doc" class="tab " href="/pages\100_movies\doc">Doc</a>
+            <a id="tab-tasks" class="tab active" href="/pages\100_movies\tasks">Tasks</a>
+        </div>
+    </nav>
+
+    <div class="view">
+    <div id="task-view">
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Add links to movie pages on a movie database</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Incorporate movie posters</div>
+        </div>
+    </div>
+    </div>
+
+    <div id="home-button" class="ui-button">
+        🏠
+        <a href="/"></a>
+    </div>
+</body>
+</html>

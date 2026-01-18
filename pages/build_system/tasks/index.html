@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <!--<title> - My Webpage</title>-->
+    <link rel="stylesheet" href="/styles/base.css" />
+
+    <link rel="stylesheet" href="/styles/page.css" />
+
+    <link rel="stylesheet" href="/styles/highlight.min.css">
+    <script src="/scripts/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-item title">Build system</div>
+        <div class="nav-item tabs">
+            <a id="tab-doc" class="tab " href="/pages\build_system\doc">Doc</a>
+            <a id="tab-tasks" class="tab active" href="/pages\build_system\tasks">Tasks</a>
+        </div>
+    </nav>
+
+    <div class="view">
+    <div id="task-view">
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Tag all the tasks!</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Add filtering to task view</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Organize this page!!</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Better handling of options (e.g. heading export level)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Incorporate Jinja templates as literate programs</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Better handling of the repeated references to design philosophies (footnotes/sidenotes?)</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Use code instead of verbatim where appropriate</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Command line argument support</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Overview</div>
+            <div class="task-desc">Link to "wrap your dependencies" design principle</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Program outline</div>
+            <div class="task-desc">Add section for pre-build setup</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Program outline > Preparing the build environment > Initializing Jinja</div>
+            <div class="task-desc">Remove file prefix from link once header links supported</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Program outline > Preparing the build environment > Initializing Jinja</div>
+            <div class="task-desc">Determine why the library is called jinja*2*</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Program outline > Processing Org files > Iterating the input files</div>
+            <div class="task-desc">Add link to "Generating the home page"</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Program outline > Processing Org files > Iterating the input files</div>
+            <div class="task-desc">Better integration of page tracking in explanation?</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Program outline > Processing Org files > The Org file processing pipeline</div>
+            <div class="task-desc">Link to principle about separating I/O</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Program outline > Processing Org files > The Org file processing pipeline</div>
+            <div class="task-desc">Insert links to subsections once supported</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Program outline > Processing Org files > The Org file processing pipeline</div>
+            <div class="task-desc">Better handling of page url</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag hard">Diff: Hard</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file</div>
+            <div class="task-desc">Eliminate the pandoc dependency once and for all!</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file</div>
+            <div class="task-desc">Insert link to "wrap dependencies" mantra</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file</div>
+            <div class="task-desc">Insert link to pandoc library documentation</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file</div>
+            <div class="task-desc">Better document how Pandoc exports Org files</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file</div>
+            <div class="task-desc">Insert link to to-do handling</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc metadata</div>
+            <div class="task-desc">Link to org-mode documentation on property drawers</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc metadata</div>
+            <div class="task-desc">Link to pandoc Python documentation on types</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc metadata</div>
+            <div class="task-desc">Extract thoughts about asserting assumptions into design principles</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc metadata</div>
+            <div class="task-desc">Convert notes to proper footnotes/sidenotes</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks</div>
+            <div class="task-desc">Split children into children/inlines, more consistent handling of each</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping code</div>
+            <div class="task-desc">Determine whether attributes list contains anything useful</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping code</div>
+            <div class="task-desc">Verify whether language is only element of class list</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping code</div>
+            <div class="task-desc">Determine significance of 'verbatim' class</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping code</div>
+            <div class="task-desc">Verify whether rest of Attr tuple goes unused</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping headers and paragraphs</div>
+            <div class="task-desc">Determine whether 'tokens' is really the appropriate term</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping headers and paragraphs</div>
+            <div class="task-desc">Verify whether the class and attribute lists are unused</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping headers and paragraphs</div>
+            <div class="task-desc">Clean up TODO detection/unwrapping logic</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping headers and paragraphs</div>
+            <div class="task-desc">Split into unwrap_head/unwrap_para (merge para with textblock?)</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping links</div>
+            <div class="task-desc">Verify whether the Attr tuple is unused</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping links</div>
+            <div class="task-desc">Verify that second element of Target is title (and unused)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping raw blocks</div>
+            <div class="task-desc">More testing of other cases that emit RawBlock (see Pandoc source code)</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping spans</div>
+            <div class="task-desc">Determine under what other circumstances Span gets emitted</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping spans</div>
+            <div class="task-desc">Check how 'DONE' tasks get emitted</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping spans</div>
+            <div class="task-desc">Pandoc categories certain valid internal links as "spurious" and emits them as spans; add custom handling for these</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Parsing an Org file > Unwrapping Pandoc blocks > Unwrapping spans</div>
+            <div class="task-desc">Auto-detect invalid internal links</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content</div>
+            <div class="task-desc">Auto-insert page title element</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Generating page content</div>
+            <div class="task-desc">Replace pandoc.write() with custom writer for better output formatting and control</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content</div>
+            <div class="task-desc">"Prettify" the HTML output (newlines & indentation)</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Better method for stripping tags than hard-coded values</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Get everything to use render_default</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Add figcaption for named blocks</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Don't hard code language</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Use Pandoc for build-time syntax highlighting</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Detect links to other Org files and convert appropriately</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">More robust link conversion</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Open external links in new tab & allow for separate styling</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Add support for start, style, & delim</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Merge logic for parent tags</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Use integer constants instead of strings</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the documentation page view</div>
+            <div class="task-desc">Remove soft breaks from AST entirely</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Generating page content > Generating the task page view</div>
+            <div class="task-desc">Auto-detect two tags from same category</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Class definitions</div>
+            <div class="task-desc">Extract my philosophy on OOP/classes into a better location?</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">Class definitions</div>
+            <div class="task-desc">More robust ID generation</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Utility functions > String utilities</div>
+            <div class="task-desc">Split into "Regex" and "HTML" sections</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Utility functions > String utilities</div>
+            <div class="task-desc">Add reference to "wrap your dependencies"</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Utility functions > String utilities > HTML utilities</div>
+            <div class="task-desc">Add reference to "reinvent the wheel" (html library)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Utility functions > String utilities > HTML utilities</div>
+            <div class="task-desc">Add support for escaping quotes?</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">Utility functions > File system utilities</div>
+            <div class="task-desc">Add link to "wrap your dependencies" mantra</div>
+        </div>
+    </div>
+    </div>
+
+    <div id="home-button" class="ui-button">
+        🏠
+        <a href="/"></a>
+    </div>
+</body>
+</html>

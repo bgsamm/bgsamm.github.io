@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <!--<title> - My Webpage</title>-->
+    <link rel="stylesheet" href="/styles/base.css" />
+
+    <link rel="stylesheet" href="/styles/page.css" />
+
+    <link rel="stylesheet" href="/styles/highlight.min.css">
+    <script src="/scripts/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-item title">Page ideas</div>
+        <div class="nav-item tabs">
+            <a id="tab-doc" class="tab active" href="/pages\page_ideas\doc">Doc</a>
+            <a id="tab-tasks" class="tab " href="/pages\page_ideas\tasks">Tasks</a>
+        </div>
+    </nav>
+
+    <div class="view">
+    <div id="doc-view">
+        <div class="table-of-contents">
+            <h1>Table of Contents</h1><ul><li><a href="#cheat-sheets">Cheat sheets</a></li><li><a href="#100x-challenges">100x challenges</a></li></ul>
+        </div>
+
+        <div class="content">
+            <h1 id="cheat-sheets">Cheat sheets</h1><ul><li>Emacs</li><li>Git</li><li>Blender</li></ul><h1 id="100x-challenges">100x challenges</h1><ul><li>Chess games</li><li>3D modelling</li></ul>
+        </div>
+    </div>
+    </div>
+
+    <div id="home-button" class="ui-button">
+        🏠
+        <a href="/"></a>
+    </div>
+</body>
+</html>

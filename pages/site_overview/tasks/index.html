@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <!--<title> - My Webpage</title>-->
+    <link rel="stylesheet" href="/styles/base.css" />
+
+    <link rel="stylesheet" href="/styles/page.css" />
+
+    <link rel="stylesheet" href="/styles/highlight.min.css">
+    <script src="/scripts/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-item title">Site overview</div>
+        <div class="nav-item tabs">
+            <a id="tab-doc" class="tab " href="/pages\site_overview\doc">Doc</a>
+            <a id="tab-tasks" class="tab active" href="/pages\site_overview\tasks">Tasks</a>
+        </div>
+    </nav>
+
+    <div class="view">
+    <div id="task-view">
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Organize these TODOs…</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Tag these TODOs</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Create an Emacs-specific page for these</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag mid">Prio: Mid</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Figure out whether linking to list items is possible</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag med">Diff: Med</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">System for organizing TODO & DONE items</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Implement to-do tracking pages (per-page + global)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Figure out site-wide quote integration</div>
+        </div>
+        <div class="task done">
+            <div class="task-header">
+                <div class="task-state">DONE</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">TODO priority tagging system</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Implement stylesheets as litprog(s) (+ find a home for them)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Reference tracking system (scrape links from page?)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Keep table of contents fixed in left sidebar</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Collapsible page sections</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Code block syntax highlighting</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Code block linking to noweb references and symbol definitions</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Tangled source code view</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Jump links to usage locations for a noweb block/symbol</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Design principle regarding "premature optimization"?</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Something about "assert assumptions rather than cover for every case" ("assume and assert"?)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Something about "the rule of three" (e.g. max three levels of nesting)</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">"Don't solve problems you don't yet have"</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">"Assume and assert"</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag hard">Diff: Hard</span>
+                    <span class="task-tag med">Diff: Med</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Custom "100 X Challenge" view?</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag hard">Diff: Hard</span>
+                    <span class="task-tag high">Prio: High</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Adaptive site layout</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag hard">Diff: Hard</span>
+                    <span class="task-tag med">Diff: Med</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Glossary/footnote system for acronyms</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                    <span class="task-tag easy">Diff: Easy</span>
+                    <span class="task-tag low">Prio: Low</span>
+                </div>
+            </div>
+            <div class="task-section">—</div>
+            <div class="task-desc">Principle regarding separating I/O from rest of code</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Principles</div>
+            <div class="task-desc">Add link to (2) in 4</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Principles</div>
+            <div class="task-desc">Add "are you having any fun" quote to 1</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Non-goals</div>
+            <div class="task-desc">Add link to Principles-(4) in 2</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Non-goals</div>
+            <div class="task-desc">Add link to Principles-(4) in 3</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Non-goals</div>
+            <div class="task-desc">Add "and that's good enough" (Frank Ocean, Nikes) quote to 4</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Non-goals</div>
+            <div class="task-desc">Either "Show me the money" (Jerry Maguire) or "Follow the money" (All the President's Men) for 7; also "The purpose of all programs…" Mike Acton quote</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Site infrastructure</div>
+            <div class="task-desc">Infrastructure overview section</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Site infrastructure</div>
+            <div class="task-desc">Digital gardening system</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Site infrastructure</div>
+            <div class="task-desc">Literate programming system</div>
+        </div>
+        <div class="task todo">
+            <div class="task-header">
+                <div class="task-state">TODO</div>
+                <div class="task-tags">
+                </div>
+            </div>
+            <div class="task-section">Design overview > Site infrastructure</div>
+            <div class="task-desc">Project tracking system</div>
+        </div>
+    </div>
+    </div>
+
+    <div id="home-button" class="ui-button">
+        🏠
+        <a href="/"></a>
+    </div>
+</body>
+</html>

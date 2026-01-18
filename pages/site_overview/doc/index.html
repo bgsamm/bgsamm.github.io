@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <!--<title> - My Webpage</title>-->
+    <link rel="stylesheet" href="/styles/base.css" />
+
+    <link rel="stylesheet" href="/styles/page.css" />
+
+    <link rel="stylesheet" href="/styles/highlight.min.css">
+    <script src="/scripts/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-item title">Site overview</div>
+        <div class="nav-item tabs">
+            <a id="tab-doc" class="tab active" href="/pages\site_overview\doc">Doc</a>
+            <a id="tab-tasks" class="tab " href="/pages\site_overview\tasks">Tasks</a>
+        </div>
+    </nav>
+
+    <div class="view">
+    <div id="doc-view">
+        <div class="table-of-contents">
+            <h1>Table of Contents</h1><ul><li><a href="#design-overview">Design overview</a><ul><li><ul><li><a href="#principles">Principles</a></li><li><a href="#non-goals">Non-goals</a></li></ul></li><li><a href="#site-infrastructure">Site infrastructure</a></li></ul></li></ul>
+        </div>
+
+        <div class="content">
+            <h1 id="design-overview">Design overview</h1><h3 id="principles">Principles</h3><p>The following are the primary "mantras" I am keeping in mind as I build this site:</p><ol><li><strong>Have fun with it</strong> - This website is meant as a creative outlet and means of personal expression, so my own enjoyment and interest will always take priority over concerns like practicality.</li><li><strong>Put a pin in it</strong> - I always want to be able to put a project down if my interests have shifted, with the knowledge that I have systems in place to facilitate picking up where I left off in the future.</li><li><strong>Reinvent the wheel</strong> - I find reimplementing something (if it's something I'm interested in) far more rewarding and instructive than using someone else's solution, even if the final result is of inferior quality.</li><li><strong>"Good enough" is good enough</strong> - I want systems for leaving something incomplete or imperfect, and for recording how I might like to improve it or extend it in the future (similar to 2)</li><li><strong>Make it public</strong> - I want to err on the side of expressing interests, making mistakes, and being wrong out in the open.</li><li><strong>Don't be silly, wrap your… dependencies</strong> - Always wrap dependencies to make them easy to replace later!</li><li><strong>Follow the data</strong> - Programs should always be designed around the data they manipulate.</li></ol><h3 id="non-goals">Non-goals</h3><p>The following are explicit non-goals of this project, meaning I am intentionally deprioritizing them:</p><ol><li><strong>Mobile friendly design</strong> - Fuck phones.</li><li><strong>Cross-browser compatibility</strong> - I'm not going to stress about making sure the website looks and functions identically across all versions of all browsers on all platforms. As long as it looks good on the latest version of FireFox, I'm content.</li><li><strong>Production-quality code</strong> - While it's great if others find my code useful, I make no claims as to its robustness nor commitments to its maintenance.</li></ol><h2 id="site-infrastructure">Site infrastructure</h2>
+        </div>
+    </div>
+    </div>
+
+    <div id="home-button" class="ui-button">
+        🏠
+        <a href="/"></a>
+    </div>
+</body>
+</html>

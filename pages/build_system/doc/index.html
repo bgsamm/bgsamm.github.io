@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <!--<title> - My Webpage</title>-->
+    <link rel="stylesheet" href="/styles/base.css" />
+
+    <link rel="stylesheet" href="/styles/page.css" />
+
+    <link rel="stylesheet" href="/styles/highlight.min.css">
+    <script src="/scripts/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-item title">Build system</div>
+        <div class="nav-item tabs">
+            <a id="tab-doc" class="tab active" href="/pages\build_system\doc">Doc</a>
+            <a id="tab-tasks" class="tab " href="/pages\build_system\tasks">Tasks</a>
+        </div>
+    </nav>
+
+    <div class="view">
+    <div id="doc-view">
+        <div class="table-of-contents">
+            <h1>Table of Contents</h1><ul><li><a href="#overview">Overview</a></li><li><a href="#program-outline">Program outline</a><ul><li><a href="#preparing-the-build-environment">Preparing the build environment</a><ul><li><a href="#preparing-the-build-directory">Preparing the build directory</a></li><li><a href="#initializing-jinja">Initializing Jinja</a></li></ul></li><li><a href="#processing-org-files">Processing Org files</a><ul><li><a href="#iterating-the-input-files">Iterating the input files</a></li><li><a href="#the-org-file-processing-pipeline">The Org file processing pipeline</a></li></ul></li><li><a href="#generating-the-home-page">Generating the home page</a></li><li><a href="#exporting-static-files">Exporting static files</a></li></ul></li><li><a href="#parsing-an-org-file">Parsing an Org file</a><ul><li><a href="#unwrapping-pandoc-metadata">Unwrapping Pandoc metadata</a></li><li><a href="#unwrapping-pandoc-blocks">Unwrapping Pandoc blocks</a><ul><li><a href="#unwrapping-code">Unwrapping code</a></li><li><a href="#unwrapping-headers-and-paragraphs">Unwrapping headers and paragraphs</a></li><li><a href="#unwrapping-links">Unwrapping links</a></li><li><a href="#unwrapping-lists">Unwrapping lists</a></li><li><a href="#unwrapping-raw-blocks">Unwrapping raw blocks</a></li><li><a href="#unwrapping-spans">Unwrapping spans</a></li><li><a href="#unwrapping-tables">Unwrapping tables</a></li><li><a href="#unwrapping-styled-text">Unwrapping styled text</a></li><li><a href="#unwrapping-text-tokens">Unwrapping text tokens</a></li></ul></li></ul></li><li><a href="#generating-page-content">Generating page content</a><ul><li><ul><li><a href="#generating-the-documentation-page-view">Generating the documentation page view</a></li><li><a href="#generating-the-task-page-view">Generating the task page view</a></li></ul></li></ul></li><li><a href="#rendering-a-site-page">Rendering a site page</a></li><li><a href="#class-definitions">Class definitions</a></li><li><a href="#utility-functions">Utility functions</a><ul><li><a href="#string-utilities">String utilities</a><ul><li><a href="#regex-utilities">Regex utilities</a></li><li><a href="#html-utilities">HTML utilities</a></li></ul></li><li><a href="#file-system-utilities">File system utilities</a><ul><li><a href="#paths">Paths</a></li><li><a href="#files">Files</a></li><li><a href="#directories">Directories</a></li></ul></li><li><a href="#date-time-utilities">Date/time utilities</a></li><li><a href="#debug-utilities">Debug utilities</a></li></ul></li></ul>
+        </div>
+
+        <div class="content">
+            <h1 id="overview">Overview</h1><p>This page details the source code for the build system used to generate this site. For a more general overview of this site's design, see <a href="site_overview.html#">Site Overview</a>.</p><p>The build system is implemented as a Python script, which generates a static site from Emacs <a href="https://orgmode.org/">Org</a> files using <a href="https://boisgera.github.io/pandoc/">Pandoc</a> to parse said files, and <a href="https://jinja.palletsprojects.com/en/stable/">Jinja</a> for generating pages from templates.</p><p>While it would be possible to use Pandoc as the entire pipeline with its built-in support for filters and templates, that approach couples me even more tightly to Pandoc, which I consider undesirable.</p><h1 id="program-outline">Program outline</h1><p>The overall structure of the program is as follows:</p><figure class="code-block"><pre><code class="language-python">&lt;&lt;Definitions&gt;&gt;
+
+&lt;&lt;Prepare build environment&gt;&gt;
+
+&lt;&lt;Process Org files&gt;&gt;
+
+&lt;&lt;Generate home page&gt;&gt;
+
+&lt;&lt;Export static files&gt;&gt;</code></pre></figure><p>"Definitions" include imports, global constants, classes, and functions:</p><figure class="code-block"><pre><code class="language-python">&lt;&lt;Imports&gt;&gt;
+
+&lt;&lt;Global constants&gt;&gt;
+
+&lt;&lt;Class definitions&gt;&gt;
+
+&lt;&lt;Function definitions&gt;&gt;</code></pre></figure><h2 id="preparing-the-build-environment">Preparing the build environment</h2><p>Before the actual build process can begin, some initial setup must be performed. First, the build directory must be prepared, and second, a Jinja environment must be created.</p><figure class="code-block"><pre><code class="language-python">&lt;&lt;Prepare build directory&gt;&gt;
+
+&lt;&lt;Initialize Jinja&gt;&gt;</code></pre></figure><h3 id="preparing-the-build-directory">Preparing the build directory</h3><p>If the build directory does not exist, it must be created; if it does exist, its contents must be deleted (to ensure a deleted, moved, or renamed "zombie" page does not persist between builds).</p><figure class="code-block"><pre><code class="language-python">BUILD_DIR = 'build'</code></pre></figure><figure class="code-block"><pre><code class="language-python">make_dir(BUILD_DIR)
+empty_dir(BUILD_DIR)</code></pre></figure><h3 id="initializing-jinja">Initializing Jinja</h3><p>Jinja uses an <code class="code-inline">Environment</code> object as a high-level API for configuring and loading templates. This is created as a global variable for later use (see <a href="#rendering-a-site-page">Rendering a site page</a>) and is set to load templates from a file system directory and trim whitespace from template blocks (see the Jinja <a href="https://jinja.palletsprojects.com/en/stable/api/#high-level-api">documentation</a>).</p><figure class="code-block"><pre><code class="language-python">import jinja2</code></pre></figure><figure class="code-block"><pre><code class="language-python">TEMPLATES_DIR = 'templates'</code></pre></figure><figure class="code-block"><pre><code class="language-python">jinja_env = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(TEMPLATES_DIR),
+    trim_blocks=True,
+    lstrip_blocks=True
+)</code></pre></figure><h2 id="processing-org-files">Processing Org files</h2><h3 id="iterating-the-input-files">Iterating the input files</h3><p>The primary input to the build system is a directory of Org files from which to generate the site's pages. So, to start, this directory is specified as a global constant.</p><figure class="code-block"><pre><code class="language-python">PAGES_DIR = 'pages'</code></pre></figure><p>The directory tree containing the Org files is then walked, filtering for non-hidden files with the '.org' extension; these filters skip over the various temp/back-up files created automatically by Emacs when editing.</p><p>The resulting pages are also tracked for use when <a href="#generating-the-home-page">generating the home page</a>.</p><figure class="code-block"><pre><code class="language-python">pages = []
+for dirpath, fname, ext in walk_dir(PAGES_DIR):
+    if fname[0] == '.' or ext != '.org':
+        continue
+
+    &lt;&lt;Process individual Org file&gt;&gt;
+
+    pages.append(page)</code></pre></figure><h3 id="the-org-file-processing-pipeline">The Org file processing pipeline</h3><p>Processing an Org file consists of the following steps:</p><figure class="code-block"><pre><code class="language-python">&lt;&lt;Read contents of Org file from disk&gt;&gt;
+
+&lt;&lt;Parse Org file contents into AST&gt;&gt;
+
+&lt;&lt;Generate page from AST&gt;&gt;
+
+&lt;&lt;Render page views to HTML&gt;&gt;</code></pre></figure><p>Reading the contents of the Org file is straightforward.</p><figure class="code-block"><pre><code class="language-python">fpath = path_join(dirpath, fname + ext)
+contents = read_file(fpath)</code></pre></figure><p>Once the contents have been read, they can be parsed into an AST. For details, see <a href="#parsing-an-org-file">Parsing an Org file</a>.</p><figure class="code-block"><pre><code class="language-python">ast = parse_org_file(contents)</code></pre></figure><p>The AST is then used to generate an abstract representation of the corresponding site page. For details, see <a href="#generating-page-content">Generating page content</a>.</p><figure class="code-block"><pre><code class="language-python">page_url = path_join(PAGES_DIR, fname)
+page = generate_page(ast, page_url)</code></pre></figure><p>Next, the page views are rendered to their final HTML representation. For details, see <a href="#rendering-a-site-page">Rendering a site page</a>.</p><p>Lastly, this HTML must be written to file. Much like reading, this is straightforward.</p><figure class="code-block"><pre><code class="language-python">for view in page.views:
+    view_html = render_page_view(page, view)
+    outpath = path_join(BUILD_DIR, view.url, 'index.html')
+    write_file(outpath, view_html)</code></pre></figure><h2 id="generating-the-home-page">Generating the home page</h2><p>From the Python side, generating the home page is as simple as passing the list of pages generated as a template argument.</p><figure class="code-block"><pre><code class="language-python">homepage_html = render_page('index.html', title='Home', pages=pages)
+outpath = path_join(BUILD_DIR, 'index.html')
+write_file(outpath, homepage_html)</code></pre></figure><h2 id="exporting-static-files">Exporting static files</h2><p>Lastly, static files (those that should be exported directly, without any further processing, such as stylesheets) must be copied to the build directory.</p><figure class="code-block"><pre><code class="language-python">STYLES_DIR = 'styles'
+SCRIPTS_DIR = 'scripts'</code></pre></figure><figure class="code-block"><pre><code class="language-python">outdir = path_join(BUILD_DIR, STYLES_DIR)
+copy_dir(STYLES_DIR, outdir)
+
+outdir = path_join(BUILD_DIR, SCRIPTS_DIR)
+copy_dir(SCRIPTS_DIR, outdir)</code></pre></figure><h1 id="parsing-an-org-file">Parsing an Org file</h1><p>The heavy-lifting of parsing an Org file is performed by Pandoc, which is interfaced with via the <a href="https://boisgera.github.io/pandoc/">pandoc</a> Python library.</p><figure class="code-block"><pre><code class="language-python">import pandoc</code></pre></figure><p>This library handles running the Pandoc subprocess and converting the JSON it produces into more user-friendly Python classes.</p><p>However, to truly hide the dependency from the rest of the script, these classes must all be "unwrapped" and converted to a library-agnostic format. This will also present an opportunity for additional processing along the way to better handle certain Org-specific elements, such as <a href="#unwrapping-headers-and-paragraphs">to-do items</a>.</p><p>The API provided by the <code class="code-inline">pandoc</code> library for parsing is <code class="code-inline">pandoc.read()</code>. This returns a root <code class="code-inline">Pandoc</code> object, which itself contains a <code class="code-inline">Meta</code> object and a list of <code class="code-inline">Block</code> objects as children. The task, then, breaks down into unwrapping these two elements.</p><figure class="code-block"><pre><code class="language-python">def parse_org_file(contents):
+    ast = pandoc.read(source=contents, format='org')
+
+    &lt;&lt;Unwrap Pandoc metadata&gt;&gt;
+
+    &lt;&lt;Unwrap Pandoc blocks&gt;&gt;
+
+    return DocTree(metadata, nodes)</code></pre></figure><h2 id="unwrapping-pandoc-metadata">Unwrapping Pandoc metadata</h2><p>Every Org file in this repository starts with a <a href="https://orgmode.org/manual/Property-Syntax.html">property drawer</a> that defines its metadata (e.g. title, author, creation date, etc.). This populates the aforementioned <code class="code-inline">Meta</code> object, which contains a dictionary of (<code class="code-inline">str</code>, <code class="code-inline">MetaString</code>) pairs.</p><p>(Note 1: The types used by the <code class="code-inline">pandoc</code> library are generally "list-like," meaning rather than as member variables, attributes are accessed via indices and slices.)</p><p>(Note 2: <code class="code-inline">assert</code> statements are used throughout this section of the script to document my assumptions about how Pandoc parses Org files, so that it is immediately clear if these assumptions ever turn out to be incorrect.)</p><p>(Note 3: Technically, the type of the dictionary values is defined to be <code class="code-inline">MetaValue</code>, which can be one of many possible child types; I am presently assuming that in the case of Org files, it always uses <code class="code-inline">MetaString</code>.)</p><figure class="code-block"><pre><code class="language-python"># Unwrap 'Meta' object
+metadata = ast[0][0]
+for k, v in metadata.items():
+    assert(type(v) is pandoc.types.MetaString)
+    # Unwrap 'MetaString' object
+    metadata[k] = v[0]
+
+&lt;&lt;Add file modification date to metadata&gt;&gt;</code></pre></figure><figure class="code-block"><pre><code class="language-python">mtime = get_file_mtime(fpath)
+mdate = timestamp_to_date(mtime)
+metadata['modified'] = mdate</code></pre></figure><h2 id="unwrapping-pandoc-blocks">Unwrapping Pandoc blocks</h2><p>Unwrapping the list of <code class="code-inline">Block</code> objects contained as the second element of the root <code class="code-inline">Pandoc</code> object is performed by iterating through them, unwrapping each block individually, and appending it to a list of nodes.</p><figure class="code-block"><pre><code class="language-python">nodes = []
+for block in ast[1]:
+    node = unwrap_block(block)
+    nodes.append(node)</code></pre></figure><p>The <code class="code-inline">Block</code> objects represent each of the individual structural elements in the Org file as one of several different subtypes (e.g. <code class="code-inline">Header</code>, <code class="code-inline">Para</code>, <code class="code-inline">CodeBlock</code>, etc.).</p><p>To start then, an <code class="code-inline">Enum</code> is created to represent the various output node types.</p><figure class="code-block"><pre><code class="language-python">import enum</code></pre></figure><figure class="code-block"><pre><code class="language-python">class NodeType(enum.Enum):
+    CODE = enum.auto()
+    HEADING = enum.auto()
+    LINK = enum.auto()
+    LIST = enum.auto()
+    LIST_ITEM = enum.auto()
+    META = enum.auto()
+    PARAGRAPH = enum.auto()
+    TABLE = enum.auto()
+    TABLE_ROW = enum.auto()
+    TABLE_CELL = enum.auto()
+    TAG = enum.auto()
+    TASK = enum.auto()
+    TEXT = enum.auto()
+    TOKEN = enum.auto()</code></pre></figure><p>Then, a map from Pandoc types to the functions responsible for unwrapping them is set up.</p><figure class="code-block"><pre><code class="language-python">import pandoc.types as pdt</code></pre></figure><figure class="code-block"><pre><code class="language-python">pandoc_type_map = {
+    pdt.BulletList: unwrap_list,
+    pdt.Code: unwrap_code,
+    pdt.CodeBlock: unwrap_code,
+    pdt.Emph: unwrap_textblock,
+    pdt.Header: unwrap_head_or_para,
+    pdt.Link: unwrap_link,
+    pdt.OrderedList: unwrap_list,
+    pdt.Para: unwrap_head_or_para,
+    pdt.Plain: unwrap_textblock,
+    pdt.RawBlock: unwrap_rawblock,
+    pdt.SoftBreak: unwrap_token,
+    pdt.Space: unwrap_token,
+    pdt.Span: unwrap_span,
+    pdt.Str: unwrap_token,
+    pdt.Strong: unwrap_textblock,
+    pdt.Table: unwrap_table,
+}</code></pre></figure><p>Finally, unwrapping a block consists of looking up the block type's unwrapper in our map and applying it.</p><figure class="code-block"><pre><code class="language-python">&lt;&lt;Pandoc type unwrapping functions&gt;&gt;
+&lt;&lt;Pandoc type unwrapping map&gt;&gt;
+
+def unwrap_block(block):
+    pandoc_type = type(block)
+
+    if pandoc_type not in pandoc_type_map:
+        raise TypeError(f'Unhandled block type: {pandoc_type}')
+
+    node = pandoc_type_map[pandoc_type](block)
+
+    return node</code></pre></figure><p>An additional helper function is also defined for unwrapping a list of blocks.</p><figure class="code-block"><pre><code class="language-python">def unwrap_blocks(blocks):
+    return [unwrap_block(block) for block in blocks]</code></pre></figure><h3 id="unwrapping-code">Unwrapping code</h3><p>Code blocks are represented by <code class="code-inline">CodeBlock</code> objects, which consist of an <code class="code-inline">Attr</code> tuple and the contained code (text). The language is specified in the class list of the <code class="code-inline">Attr</code> tuple.</p><p>Inline code blocks are represented by <code class="code-inline">Code</code> objects and consist of an <code class="code-inline">Attr</code> tuple and the contained code (text).</p><figure class="code-block"><pre><code class="language-python">def unwrap_code(block):
+    node = DocNode(NodeType.CODE)
+    node.text = block[1]
+    node.inline = (type(block) is pdt.Code)
+
+    return node</code></pre></figure><h3 id="unwrapping-headers-and-paragraphs">Unwrapping headers and paragraphs</h3><p><code class="code-inline">Header</code> objects contain the header level (1, 2, 3, etc.), an <code class="code-inline">Attr</code> tuple of the form (id, classes, attributes), and then a list representing the parsed header tokens (type <code class="code-inline">Inline</code>). These must be unwrapped recursively.</p><p>Because <code class="code-inline">TODO</code> items are represented in an Org mode using the same syntax as headings, they end up getting parsed as a <code class="code-inline">Span</code> in either a <code class="code-inline">Header</code> or a <code class="code-inline">Para</code> object's <code class="code-inline">Inline</code> tokens (since Pandoc exports headings deeper than <code class="code-inline">org-export-headline-levels</code> as paragraphs).</p><figure class="code-block"><pre><code class="language-python">def unwrap_head_or_para(block):
+    if type(block) is pdt.Header:
+        node = DocNode(NodeType.HEADING)
+        node.level = block[0]
+        i = 2
+    else:
+        node = DocNode(NodeType.PARAGRAPH)
+        i = 0
+
+    node.children = unwrap_blocks(block[i])
+
+    if node.children[0].type == NodeType.TAG:
+        is_todo = (node.children[0].text == 'todo')
+        is_done = (node.children[0].text == 'done')
+        assert(is_todo or is_done)
+        node.type = NodeType.TASK
+        node.done = is_done
+        # Skip TODO keyword and first space
+        node.children = node.children[2:]
+
+    first_tag_idx = -1
+    for i, child in enumerate(node.children):
+        if child.type == NodeType.TAG:
+            first_tag_idx = i
+            break
+
+    if first_tag_idx &gt;= 0:
+        node.tags = [tag.text for tag in node.children[first_tag_idx:]
+                     if tag.type == NodeType.TAG]
+        node.children = node.children[:first_tag_idx]
+    else:
+        node.tags = []
+
+    return node</code></pre></figure><h3 id="unwrapping-links">Unwrapping links</h3><p><code class="code-inline">Link</code> objects contain an <code class="code-inline">Attr</code> tuple, a list of <code class="code-inline">Inline</code> tokens (the link text), and the link's <code class="code-inline">Target</code> (a 2-tuple).</p><figure class="code-block"><pre><code class="language-python">def unwrap_link(block):
+    node = DocNode(NodeType.LINK)
+
+    node.target = target = block[2][0]
+
+    i = target.find(':')
+    if i &gt;= 0 and i &lt; len(target) - 1 and target[i + 1] != ':':
+        scheme = target[:i]
+        if scheme == 'http' or scheme == 'https':
+            node.external = True
+        elif scheme == 'file':
+            node.external = False
+        else:
+            raise ValueError(f'Unhandled link scheme: {scheme}')
+    else:
+        node.external = False
+
+    assert(block[2][1] == '') # Unused title field
+
+    node.children = unwrap_blocks(block[1])
+
+    return node</code></pre></figure><h3 id="unwrapping-lists">Unwrapping lists</h3><p>An <code class="code-inline">OrderedList</code> contains a tuple of list attributes of the form (start, style, delim), then a list of the list's items (each of which is itself a list of blocks).</p><figure class="code-block"><pre><code class="language-python">def unwrap_list(block):
+    node = DocNode(NodeType.LIST)
+
+    node.ordered = (type(block) is pdt.OrderedList)
+
+    if node.ordered:
+        node.start = block[0][0]
+        node.style = str(block[0][1])[:-2] # Strip trailing parens
+        node.delim = str(block[0][2])[:-2] # ""
+        i = 1
+    else:
+        i = 0
+
+    for item in block[i]:
+        item_node = DocNode(NodeType.LIST_ITEM)
+        item_node.children = unwrap_blocks(item)
+        node.children.append(item_node)
+
+    return node</code></pre></figure><h3 id="unwrapping-raw-blocks">Unwrapping raw blocks</h3><p><code class="code-inline">RawBlock</code> objects contain their <code class="code-inline">Format</code> and associated <code class="code-inline">Text</code>. This gets emitted by unhandled meta lines (lines starting with "#+").</p><figure class="code-block"><pre><code class="language-python">def unwrap_rawblock(block):
+    assert(block[0][0] == 'org')
+
+    matches = regex_match(r'#\+(\w+):\s+(.+)', block[1])
+    assert(matches is not None)
+
+    node = DocNode(NodeType.META)
+    node.key = matches[0].lower()
+    node.value = matches[1]
+
+    return node</code></pre></figure><h3 id="unwrapping-spans">Unwrapping spans</h3><p><code class="code-inline">Span</code> objects consist of an <code class="code-inline">Attr</code> tuple and a list of <code class="code-inline">Inline</code> tokens, much like a header. This gets emitted for <code class="code-inline">TODO</code> items, in which case the class list in the <code class="code-inline">Attr</code> tuple will be <code class="code-inline">['todo', 'TODO']</code>.</p><figure class="code-block"><pre><code class="language-python">def unwrap_span(block):
+    if 'spurious-link' in block[0][1]:
+        node = DocNode(NodeType.LINK)
+
+        key, target = block[0][2][0]
+        assert(key == 'target')
+
+        node.target = target
+        node.external = False
+
+        assert(type(block[1][0]) is pdt.Emph)
+        node.children = unwrap_blocks(block[1][0][0])
+    else:
+        node = DocNode(NodeType.TAG)
+
+        if 'tag' in block[0][1]:
+            key, tag = block[0][2][0]
+            assert(key == 'tag-name')
+        else:
+            tag = block[0][1][0]
+            assert(tag == 'todo' or tag == 'done')
+
+        node.text = tag
+
+    return node</code></pre></figure><h3 id="unwrapping-tables">Unwrapping tables</h3><figure class="code-block"><pre><code class="language-python">def unwrap_table(block):
+    def unwrap_cell(cell, is_header=False):
+        node = DocNode(NodeType.TABLE_CELL)
+        node.is_header = is_header
+        assert(cell[2][0] == 1)
+        assert(cell[3][0] == 1)
+        assert(len(cell[4]) &lt;= 1)
+        node.children = unwrap_blocks(cell[4])
+        return node
+
+    def unwrap_row(row, is_header=False):
+        node = DocNode(NodeType.TABLE_ROW)
+        node.children = [unwrap_cell(cell, is_header) for cell in row[1]]
+        return node
+
+    node = DocNode(NodeType.TABLE)
+
+    table_head = block[3]
+    if len(table_head[1]) != 0:
+        assert(len(table_head[1]) == 1)
+        node.children.append(unwrap_row(table_head[1][0], is_header=True))
+
+    assert(len(block[4]) == 1)
+    table_body = block[4][0]
+    assert(table_body[1][0] == 0)
+    assert(len(table_body[2]) == 0)
+
+    node.children += [unwrap_row(row) for row in table_body[3]]
+
+    return node</code></pre></figure><h3 id="unwrapping-styled-text">Unwrapping styled text</h3><figure class="code-block"><pre><code class="language-python">def unwrap_textblock(block):
+    node = DocNode(NodeType.TEXT)
+    node.children = unwrap_blocks(block[0])
+
+    node.strong = (type(block) is pdt.Strong)
+    node.emph = (type(block) is pdt.Emph)
+
+    return node</code></pre></figure><h3 id="unwrapping-text-tokens">Unwrapping text tokens</h3><figure class="code-block"><pre><code class="language-python">def unwrap_token(block):
+    node = DocNode(NodeType.TOKEN)
+
+    if type(block) is pdt.Str:
+        node.text = block[0]
+    else:
+        node.text = ' '
+
+    return node</code></pre></figure><h1 id="generating-page-content">Generating page content</h1><p>Now that the Org file has been parsed into an AST, the AST can be converted to HTML representing the page content by visiting each node in the AST node list.</p><figure class="code-block"><pre><code class="language-python">def generate_page(ast, page_url):
+    title = ast.metadata['title']
+    cdate = ast.metadata['date']
+    mdate = ast.metadata['modified']
+    category = ast.metadata['category']
+    abstract = ast.metadata['abstract']
+    page = Page(title, cdate, mdate, category, abstract)
+
+    main_view = generate_doc_view(ast)
+    main_view.url = path_join(page_url, 'doc')
+    page.views.append(main_view)
+
+    task_view = generate_task_view(ast)
+    task_view.url = path_join(page_url, 'tasks')
+    page.views.append(task_view)
+
+    page.default_view = main_view
+
+    return page</code></pre></figure><h3 id="generating-the-documentation-page-view">Generating the documentation page view</h3><figure class="code-block"><pre><code class="language-python">def generate_doc_view(ast):
+    view = PageView('Doc')
+
+    &lt;&lt;Generate doc view contents&gt;&gt;
+
+    &lt;&lt;Generate doc view table of contents&gt;&gt;
+
+    return view</code></pre></figure><p>Similarly to the way parsing was handled, each node type will need its own case, with support for recursively converting children.</p><figure class="code-block"><pre><code class="language-python">headings = []
+view.content = ''
+for node in ast.nodes:
+    node_html = render_node(node)
+    if node.type == NodeType.HEADING:
+        headings.append(node)
+    view.content += node_html</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_nodes(nodes):
+    html = ''
+    for node in nodes:
+        html += render_node(node)
+    return html</code></pre></figure><p>The strategy for rendering the page's contents is similar to that for generating the AST - define a map from node type to its corresponding render function.</p><figure class="code-block"><pre><code class="language-python">html_render_map = {
+    NodeType.CODE: render_code,
+    NodeType.HEADING: render_heading,
+    NodeType.LINK: render_link,
+    NodeType.LIST: render_list,
+    NodeType.LIST_ITEM: lambda node: render_default(node, 'li'),
+    NodeType.META: None,
+    NodeType.PARAGRAPH: lambda node: render_default(node, 'p'),
+    NodeType.TABLE: lambda node: render_default(node, 'table'),
+    NodeType.TABLE_ROW: lambda node: render_default(node, 'tr'),
+    NodeType.TABLE_CELL: render_table_cell,
+    NodeType.TAG: None,
+    NodeType.TASK: None,
+    NodeType.TEXT: render_text,
+    NodeType.TOKEN: render_token,
+}</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_code(node):
+    text = html_escape(node.text).strip()
+
+    if node.inline:
+        html = f'&lt;code class="code-inline"&gt;{text}&lt;/code&gt;'
+    else:
+        html = '&lt;figure class="code-block"&gt;'
+        html += '&lt;pre&gt;&lt;code class="language-python"&gt;'
+        html += text
+        html += '&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;'
+
+    return html</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_default(node, tag, **kwargs):
+    body = render_nodes(node.children)
+    attrs = ''.join([f' {k}="{v}"' for k,v in kwargs.items()])
+    return f'&lt;{tag}{attrs}&gt;{body}&lt;/{tag}&gt;'</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_heading(node):
+    id_ = html_slugify(node.inner_text())
+    tag = f'h{node.level}'
+    return render_default(node, tag, id=id_)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_link(node):
+    target = node.target
+    if not node.external:
+        i = target.find('::')
+        if i &gt;= 0:
+            fname = target[:i]
+            frag = target[i + 2:]
+        elif target[0] == '*' or target[0] == '#':
+            fname = ''
+            frag = target
+        else:
+            fname = target
+            frag = ''
+        fname = fname.replace('.org', '.html')
+        frag = '#' + html_slugify(frag[1:])
+        target = fname + frag
+    return render_default(node, 'a', href=target)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_list(node):
+    tag = 'ol' if node.ordered else 'ul'
+    return render_default(node, tag)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_table_cell(node):
+    tag = 'th' if node.is_header else 'td'
+    return render_default(node, tag)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_text(node):
+    if node.strong:
+        return render_default(node, 'strong')
+    if node.emph:
+        return render_default(node, 'em')
+    return render_nodes(node.children)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_token(node):
+    return html_escape(node.text)</code></pre></figure><figure class="code-block"><pre><code class="language-python">&lt;&lt;HTML render map&gt;&gt;
+
+def render_node(node):
+    if node.type not in html_render_map:
+        raise TypeError(f'Unhandled node type: {node.type}')
+
+    renderer = html_render_map[node.type]
+    if renderer is None:
+        return ''
+
+    html = renderer(node)
+    return html</code></pre></figure><figure class="code-block"><pre><code class="language-python">view.toc = '&lt;h1&gt;Table of Contents&lt;/h1&gt;'
+prev_level = 0
+for node in headings:
+    if node.level &gt; prev_level:
+        view.toc += '&lt;ul&gt;&lt;li&gt;' * (node.level - prev_level)
+    else:
+        if node.level &lt; prev_level:
+            view.toc += '&lt;/li&gt;&lt;/ul&gt;' * (prev_level - node.level)
+        view.toc += '&lt;/li&gt;&lt;li&gt;'
+    text = node.inner_text()
+    id_ = html_slugify(text)
+    view.toc += f'&lt;a href="#{id_}"&gt;{text}&lt;/a&gt;'
+    prev_level = node.level
+view.toc += '&lt;/li&gt;&lt;/ul&gt;' * prev_level</code></pre></figure><h3 id="generating-the-task-page-view">Generating the task page view</h3><figure class="code-block"><pre><code class="language-python">def generate_task_view(ast):
+    view = PageView('Tasks')
+    view.tasks = []
+
+    stack = []
+    for node in ast.nodes:
+        if node.type == NodeType.HEADING:
+            while len(stack) &gt; 0 and node.level &lt;= stack[-1].level:
+                stack.pop()
+            stack.append(node)
+
+        if node.type != NodeType.TASK:
+            continue
+
+        task = DocNode(NodeType.TASK)
+        task.state = 'done' if node.done else 'todo'
+
+        if len(stack) == 0:
+            task.section = '—'
+        else:
+            task.section = ' &gt; '.join([heading.inner_text() for heading in stack])
+
+        task.tags = []
+        for tag in node.tags:
+            if tag in ['easy', 'med', 'hard']:
+                label = 'Diff'
+            elif tag in ['low', 'mid', 'high']:
+                label = 'Prio'
+            else:
+                continue
+            task.tags.append((label, tag))
+
+        task.description = node.inner_text().strip()
+
+        view.tasks.append(task)
+
+    return view</code></pre></figure><h1 id="rendering-a-site-page">Rendering a site page</h1><p>When it comes time to actually render a page, we use the Jinja <code class="code-inline">Environment</code> created earlier to load the template (AFAIK Jinja handles caching for us), then use the template to render the final output.</p><figure class="code-block"><pre><code class="language-python">def render_page(template, *args, **kwargs):
+    jinja_template = jinja_env.get_template(template)
+    return jinja_template.render(*args, **kwargs)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def render_page_view(page, view):
+    jinja_template = jinja_env.get_template(f'view_{view.id}.html')
+    return jinja_template.render(page=page, view=view)</code></pre></figure><h1 id="class-definitions">Class definitions</h1><p>Classes are used primarily as data containers (à la structs in C) and generally do not define methods beyond their constructors. I have determined that the improved readability compared to tuples and improved usability compared to dictionaries is worth the additional boilerplate.</p><figure class="code-block"><pre><code class="language-python">class DocTree:
+    def __init__(self, metadata, nodes):
+        self.metadata = metadata
+        self.nodes = nodes</code></pre></figure><figure class="code-block"><pre><code class="language-python">class DocNode:
+    def __init__(self, type_):
+        self.type = type_
+        self.text = ''
+        self.children = []
+
+    def inner_text(self):
+        if len(self.text) &gt; 0:
+            return self.text
+        return ''.join([child.inner_text() for child in self.children])</code></pre></figure><figure class="code-block"><pre><code class="language-python">class Page:
+    def __init__(self, title, cdate, mdate, category, abstract):
+        self.title = title
+        self.cdate = cdate
+        self.mdate = mdate
+        self.category = category
+        self.abstract = abstract
+
+        self.views = []
+        self.default_view = None</code></pre></figure><figure class="code-block"><pre><code class="language-python">class PageView:
+    def __init__(self, name):
+        self.id = html_slugify(name)
+        self.name = name</code></pre></figure><h1 id="utility-functions">Utility functions</h1><p>The following are a collection of utility functions that will be useful throughout the build script.</p><h2 id="string-utilities">String utilities</h2><p>The functions here provide miscellaneous utilities for working with strings.</p><h3 id="regex-utilities">Regex utilities</h3><p>This primarily exists to wrap the <code class="code-inline">re</code> library dependency.</p><figure class="code-block"><pre><code class="language-python">import re</code></pre></figure><figure class="code-block"><pre><code class="language-python">def regex_match(pattern, string):
+    """Return the list of match groups for a given regex pattern
+    and input string, or None if the string was not a match
+    """
+    match_obj = re.match(pattern, string)
+    if match_obj is not None:
+        return match_obj.groups()
+    return None</code></pre></figure><h3 id="html-utilities">HTML utilities</h3><p>This replaces a dependency on the <code class="code-inline">html</code> library.</p><p>Note that when escaping strings for use in HTML content, ampersands should be replaced first, else the ampersands in the angle bracket escape sequences will also get replaced!</p><figure class="code-block"><pre><code class="language-python">def html_escape(string):
+    """Replace the '&amp;', '&lt;', and '&gt;' characters in a string with their
+    corresponding HTML escape sequences.
+    """
+    return string.replace('&amp;', '&amp;amp;') \
+                 .replace('&lt;', '&amp;lt;') \
+                 .replace('&gt;', '&amp;gt;')</code></pre></figure><figure class="code-block"><pre><code class="language-python">def html_slugify(string):
+    """Convert an arbitrary string to a valid CSS identifier
+    by replacing non-alphanumeric characters with hyphens.
+    """
+    slug = ''
+    for c in string:
+        slug += c.lower() if c.isalnum() else '-'
+    return slug</code></pre></figure><figure class="code-block"><pre><code class="language-python">def html_strip_tag(string):
+    """Remove the outermost HTML tag from a string.
+    """
+    start = min(0, string.find('&gt;'))
+    end = string.rfind('&lt;')
+    if end &lt; 0:
+        end = len(string)
+    return string[start:end]</code></pre></figure><h2 id="file-system-utilities">File system utilities</h2><p>These functions primarily serve to wrap dependencies on the <code class="code-inline">os</code> and <code class="code-inline">shutil</code> libraries.</p><figure class="code-block"><pre><code class="language-python">import os</code></pre></figure><figure class="code-block"><pre><code class="language-python">import shutil</code></pre></figure><h3 id="paths">Paths</h3><figure class="code-block"><pre><code class="language-python">def path_join(*args):
+    """Join several path elements together with the OS-appropriate
+    path separator.
+    """
+    return os.path.join(*args)</code></pre></figure><h3 id="files">Files</h3><figure class="code-block"><pre><code class="language-python">def read_file(path):
+    """Return the contents of a UTF-8 file as a string.
+    """
+    with open(fpath, 'r', encoding='utf-8') as f:
+        contents = f.read()
+    return contents</code></pre></figure><figure class="code-block"><pre><code class="language-python">def write_file(fpath, string):
+    """Write a string to a file with UTF-8 encoding.
+    """
+    dirpath = os.path.split(fpath)[0]
+    os.makedirs(dirpath, exist_ok=True)
+    with open(fpath, 'w+', encoding='utf-8') as f:
+        f.write(string)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def get_file_mtime(path):
+    """Get the Unix timestamp for the last modification time of a file
+    as recorded by the file system
+    """
+    return os.path.getmtime(path)</code></pre></figure><h3 id="directories">Directories</h3><figure class="code-block"><pre><code class="language-python">def make_dir(path):
+    """Create a directory (and all necessary parent directories) if it
+    does not already exist.
+    """
+    os.makedirs(path, exist_ok=True)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def empty_dir(root):
+    """Delete the contents of a directory.
+    """
+    for itemname in os.listdir(root):
+        itempath = os.path.join(root, itemname)
+        if os.path.isdir(itempath):
+            shutil.rmtree(itempath)
+        else:
+            os.remove(itempath)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def copy_dir(indir, outdir):
+    """Copy the contents of one directory to another.
+    """
+    shutil.copytree(indir, outdir, dirs_exist_ok=True)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def walk_dir(root):
+    """Walk recursively through the files in a directory tree,
+    yielding for each file its containing directory, name, and
+    extension.
+    """
+    for dirpath, dirnames, filenames in os.walk(root):
+        for filename in filenames:
+            fname, ext = os.path.splitext(filename)
+            yield dirpath, fname, ext</code></pre></figure><h2 id="date-time-utilities">Date/time utilities</h2><figure class="code-block"><pre><code class="language-python">import datetime</code></pre></figure><figure class="code-block"><pre><code class="language-python">def timestamp_to_date(timestamp):
+    datetime_obj = datetime.datetime.fromtimestamp(timestamp, datetime.UTC)
+    return datetime_obj.strftime('%Y-%m-%d')</code></pre></figure><h2 id="debug-utilities">Debug utilities</h2><figure class="code-block"><pre><code class="language-python">def debug_print_ast(ast):
+    print(f'Metadata: {ast.metadata}')
+    print('Nodes:')
+    for node in ast.nodes:
+        debug_print_node(node, indent=1)</code></pre></figure><figure class="code-block"><pre><code class="language-python">def debug_print_node(node, indent=0):
+    tab = ' ' * 2
+    ind = tab * indent
+
+    print(f'{ind}Type: {node.type}', end=' ')
+    if len(node.text) &gt; 0:
+        print(f'("{node.text}")', end='')
+    print()
+
+    ind += tab
+
+    n_children = len(node.children)
+    if n_children &gt; 0:
+        print(f'{ind}Children: {n_children}')
+        for child in node.children:
+            debug_print_node(child, indent=indent + 2)</code></pre></figure>
+        </div>
+    </div>
+    </div>
+
+    <div id="home-button" class="ui-button">
+        🏠
+        <a href="/"></a>
+    </div>
+</body>
+</html>
